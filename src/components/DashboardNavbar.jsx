@@ -22,6 +22,8 @@ const DashboardNavbar = () => {
     dispatch(logoutUser(null))
       .unwrap()
       .then(() => {
+        //clear token 
+        localStorage.removeItem("token");
         navigate("/login", { replace: true });
 
         dispatch(clearMessage());
@@ -38,7 +40,7 @@ const DashboardNavbar = () => {
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container-fluid">
         <Link to="/dashboard" className="navbar-brand">
-          Travel-Planner
+          PK Travel-Planner
         </Link>
 
         <button
