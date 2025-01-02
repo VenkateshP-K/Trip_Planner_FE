@@ -1,0 +1,25 @@
+/* div > .card {
+    transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
+} */
+
+
+.homepage-cards .card {
+    background-color: rgb(255, 255, 255, 0.1);
+    border: 0.1rem solid rgb(255, 255, 255, 0.5) ;
+}
+
+.homepage-cards .card img {
+    height: 16rem;
+    object-fit:contain;
+}
+
+
+
+.homepage-cards  .card:hover {
+    transform: scale(0.9);
+    transition: 0.3s;
+    background-color: rgb(255, 255, 255, 0.2);
+    border-left: 2px solid rgb(255, 255, 255, 0.3);
+    border-bottom: 2px solid rgb(255, 255, 255, 0.3);
+    box-shadow: -5px 5px 10px rgb(0, 0, 0, 0.1);
+}
