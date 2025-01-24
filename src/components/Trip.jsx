@@ -218,7 +218,7 @@ function Trip() {
           <div className="card">
             <div className="card-body">
               <h5 className="card-title text-center">Transportation</h5>
-              <Transportation trip={trip} tripId={tripId} />
+              <Transportation trip={trip} setTrip={setTrip} />
             </div>
           </div>
         </div>

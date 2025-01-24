@@ -35,7 +35,7 @@ const tripServices = {
     },
 
     bookTravel: async (tripId, bookingData) => {
-        return await protectedInstance.post(`/users/trips/travels/booking/${tripId}`, bookingData);
+        return await protectedInstance.put(`/users/trips/travels/booking/${tripId}`, bookingData);
     },
 
     bookAccommodation: async (tripId, bookingDetails) => {
@@ -67,8 +67,8 @@ const tripServices = {
         return await protectedInstance.get(`/users/trips/gettravel/${travelId}`);
     },
 
-    getAllTravelBooking: async () => {
-        return await protectedInstance.get(`/users/trips/getalltravelbookings`);
+    getAllTravelBooking: async (tripId) => {
+        return await protectedInstance.get(`/users/travels/booking/all/${tripId}`);
     },
 
     editTravelBookingById: async (travelId, travelName, travelLocation, travelPrice) => {
@@ -76,7 +76,7 @@ const tripServices = {
     },
 
     deleteTravelBookingById: async (travelId) => {
-        return await protectedInstance.delete(`/users/trips/deletetravel/${travelId}`);
+        return await protectedInstance.delete(`/users/travels/booking/${travelId}`);
     },
 
     getAllToDos: async (tripId) => {

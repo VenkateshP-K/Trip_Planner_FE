@@ -6,7 +6,7 @@ import axios from "axios";
 import tripServices from "../services/tripServices";
 import userServices from "../services/userServices";
 
-const Transportation = ({ trip }) => {
+const Transportation = ({ trip, setTrip }) => {
   const tripId = trip._id;
   const itemsPerPage = 5;
 
@@ -18,6 +18,7 @@ const Transportation = ({ trip }) => {
   const [trainBookingState, setTrainBookingState] = useState({});
   const [currentPageFlights, setCurrentPageFlights] = useState(0);
   const [currentPageTrains, setCurrentPageTrains] = useState(0);
+
 
   const paginatedFlights = (flights || []).slice(
     currentPageFlights * itemsPerPage,
@@ -83,7 +84,7 @@ const Transportation = ({ trip }) => {
 
       setFlightBookingState((prev) => ({ ...prev, [flight._id]: "loading" }));
       const bookingData = {
-        //name: `${trip.user.firstName} ${trip.user.lastName}`,
+        name: `${trip.tripName}`,
         travelType: "flight",
         flightNumber: flight.flightNumber,
         airline: flight.airline,
@@ -107,7 +108,7 @@ const Transportation = ({ trip }) => {
     try {
       setTrainBookingState((prev) => ({ ...prev, [train._id]: "loading" }));
       const bookingData = {
-        //name: `${trip.user.firstName} ${trip.user.lastName}`,
+        name: `${trip.tripName}`,
         travelType: "train",
         trainNumber: train.trainNumber,
         trainName: train.trainName,
@@ -270,7 +271,7 @@ const Transportation = ({ trip }) => {
 
       {/* Flights Section */}
       {flightsState === "loading" && <p>Loading flights...</p>}
-      {flightsState === "failed" && <p>Failed to load flights</p>}
+      {flightsState === "failed" && <p>No Flights found for this trip</p>}
       {flightsState === "succeeded" && (
         <div className="table-responsive">
           <table class="table table-striped table-hover align-middle ">
@@ -328,7 +329,7 @@ const Transportation = ({ trip }) => {
 
       {/* Trains Section */}
       {trainsState === "loading" && <p>Loading trains...</p>}
-      {trainsState === "failed" && <p>Failed to load trains</p>}
+      {trainsState === "failed" && <p>No Trains Found For This trip</p>}
       {trainsState === "succeeded" && (
         <div className="table-responsive">
           <table class="table table-striped">

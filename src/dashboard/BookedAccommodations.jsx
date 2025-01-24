@@ -109,9 +109,6 @@ const BookedAccommodations = ({ tripId }) => {
     <div className="container">
       <div className="row">
         <div className="col">
-          <h6 className="text-start text-secondary">
-            Accommodations Booked (*CheckIn&out can be done any time)
-          </h6>
 
           <div
             className="table-responsive"
