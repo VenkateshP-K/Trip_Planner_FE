@@ -5,8 +5,6 @@ import TravelBooking from '../dashboard/TravelBooking';
 import BookedAccommodations from '../dashboard/BookedAccommodations';
 import Accommodation from '../dashboard/Accommodation';
 import Transportation from '../dashboard/Transportation';
-import EditToDo from '../dashboard/EditToDo';
-import ToDoStatusUpdate from '../dashboard/ToDoStatusUpdate';
 import { useNavigate } from 'react-router-dom';
 import NavBar from '../components/NavBar';
 import ToDoModal from '../dashboard/ToDoModal';
