@@ -22,8 +22,10 @@ const tripServices = {
         return await protectedInstance.delete(`/users/trips/${tripId}`);
     },
 
-    searchTrips: async () => {
-        return await instance.get(`/users/trips/search`);
+    searchTrips: async (searchTerm) => {
+        return await instance.get(`/users/trips/search`, {
+            params: { trip: searchTerm },
+        });
     },
 
     suggestFlights: async () => {
@@ -83,9 +85,9 @@ const tripServices = {
     },
 
     addToDos: async (tripId, toDoName, toDoDescription) => {
-        return await protectedInstance.post(`/users/trips/toDos/${tripId}`, { 
-            toDoName, 
-            toDoDescription 
+        return await protectedInstance.post(`/users/trips/toDos/${tripId}`, {
+            toDoName,
+            toDoDescription
         });
     },
 

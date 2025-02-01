@@ -12,6 +12,7 @@ const TravelBooking = ({ tripId }) => {
     return Date.now() > new Date(departureTime).getTime();
   };
 
+  useEffect(() => {
   const fetchTravelBookings = async () => {
     setLoading(true);
     setError(null);
@@ -25,6 +26,9 @@ const TravelBooking = ({ tripId }) => {
       setLoading(false);
     }
   };
+
+  fetchTravelBookings();
+  }, [tripId]);
 
   const handleTravelBookingCancel = async (travelBookingId) => {
     setCancelingBtn((prev) => ({ ...prev, [travelBookingId]: true }));
@@ -45,10 +49,6 @@ const TravelBooking = ({ tripId }) => {
       setCancelingBtn((prev) => ({ ...prev, [travelBookingId]: false }));
     }
   };
-
-  useEffect(() => {
-    fetchTravelBookings();
-  }, [tripId]);
 
   if (loading) {
     return (

@@ -61,7 +61,7 @@ function NavBar() {
               </li>
   
               <li className="nav-item">
-                <button className="nav-link" onClick={handleLogout}>
+                <button className="btn btn-dark" onClick={handleLogout}>
                   Logout
                 </button>
               </li>

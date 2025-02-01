@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import tripServices from "../services/tripServices";
-import { Formik, Field, Form } from "formik";
-import * as Yup from "yup";
+import userServices from "../services/userServices";
 
 const Dashboard = () => {
   const [trips, setTrips] = useState([]);
@@ -31,6 +30,18 @@ const Dashboard = () => {
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      await userServices.Logout();
+      alert("Logged out successfully");
+      localStorage.removeItem("token");
+      navigate("/login");
+    } catch (err) {
+      console.error("Logout failed", err);
+      setError("Logout failed. Try again.");
+    }
+  };
+
   const calculateDaysRemaining = (startDate) => {
     const today = new Date().setHours(0, 0, 0, 0);
     const tripStart = new Date(startDate).setHours(0, 0, 0, 0);
@@ -51,43 +62,10 @@ const Dashboard = () => {
             Add Trip
           </button>
         </div>
-        <div className="col">
-          <Formik
-            initialValues={{ search: "" }}
-            validationSchema={Yup.object({
-              search: Yup.string().required("Keywords required"),
-            })}
-            onSubmit={async (values, { resetForm }) => {
-              try {
-                const response = await tripServices.searchTrips(values.search);
-                setTrips(response.data);
-                resetForm();
-              } catch (error) {
-                console.error("Error searching trips:", error);
-              }
-            }}
-          >
-            {(formik) => (
-              <Form className="d-flex gap-2" role="search">
-                <div className="col">
-                  <Field
-                    type="search"
-                    className={`form-control ${formik.touched.search
-                        ? formik.errors.search
-                          ? "is-invalid"
-                          : "is-valid"
-                        : ""
-                      }`}
-                    name="search"
-                    placeholder="Search Trips"
-                  />
-                </div>
-                <button className="btn btn-success" type="submit">
-                  Search
+        <div className="col text-end">
+                <button className="btn btn-success" onClick={handleLogout}>
+                  Logout
                 </button>
-              </Form>
-            )}
-          </Formik>
         </div>
       </div>
 
