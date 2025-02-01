@@ -17,7 +17,6 @@ const TravelBooking = ({ tripId }) => {
     setError(null);
     try {
       const response = await tripServices.getAllTravelBooking(tripId);
-      console.log("Fetched Travel Bookings:", response.data); // Log response data
       setTravelBookings(response.data);
     } catch (err) {
       console.error("Error fetching travel bookings:", err);
@@ -27,17 +26,19 @@ const TravelBooking = ({ tripId }) => {
     }
   };
 
-  useEffect(() => {
-    fetchTravelBookings();
-  }, [tripId]);
-
-
   const handleTravelBookingCancel = async (travelBookingId) => {
     setCancelingBtn((prev) => ({ ...prev, [travelBookingId]: true }));
+
     try {
-      await axios.delete(`/api/travel-bookings/${travelBookingId}`);
+      await tripServices.deleteTravelBookingById(travelBookingId);
+
+      // Create a new array reference (React re-renders on new state)
+      setTravelBookings((prevBookings) => {
+        const updatedBookings = prevBookings.filter((booking) => booking._id !== travelBookingId);
+        return [...updatedBookings]; // Ensure a new reference
+      });
+
       alert("Travel booking canceled.");
-      fetchTravelBookings(); // Refresh the bookings list
     } catch (err) {
       alert("Failed to cancel the travel booking.");
     } finally {
@@ -76,7 +77,7 @@ const TravelBooking = ({ tripId }) => {
 
   return (
     <div className="container">
-      <h5 className="text-start text-primary mb-3">Trains Booked</h5>
+      <h5 className="text-start text-primary mb-3">Travels Booked</h5>
       <div
         className="table-responsive"
         style={{
@@ -90,8 +91,8 @@ const TravelBooking = ({ tripId }) => {
           <thead className="table-dark">
             <tr>
               <th>#</th>
-              <th>Train No.</th>
-              <th>Train Name</th>
+              <th>No.</th>
+              <th>Name</th>
               <th>Source</th>
               <th>Destination</th>
               <th>Dep. Time</th>
@@ -103,8 +104,8 @@ const TravelBooking = ({ tripId }) => {
             {travelBookings.map((travelBooking, index) => (
               <tr key={travelBooking._id}>
                 <td>{index + 1}</td>
-                <td>{travelBooking.trainNumber}</td>
-                <td>{travelBooking.trainName}</td>
+                <td>{travelBooking.trainNumber || travelBooking.flightNumber} </td>
+                <td>{travelBooking.trainName || travelBooking.airline}</td>
                 <td>{travelBooking.source}</td>
                 <td>{travelBooking.destination}</td>
                 <td>
@@ -126,10 +127,6 @@ const TravelBooking = ({ tripId }) => {
                 <td>
                   <button
                     className="btn btn-outline-danger rounded-pill"
-                    disabled={
-                      isPastDepartureTime(travelBooking.departureTime) ||
-                      cancelingBtn[travelBooking._id]
-                    }
                     onClick={() => handleTravelBookingCancel(travelBooking._id)}
                   >
                     {cancelingBtn[travelBooking._id] ? "Canceling..." : "Cancel"}

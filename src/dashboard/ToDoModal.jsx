@@ -9,16 +9,16 @@ const ToDoModal = ({ tripId, onClose }) => {
 
   const handleSubmit = async () => {
     try {
-      const newToDo = { toDoName, toDoDescription };
-      console.log(newToDo)
-      await tripServices.addToDos(tripId, newToDo);
-      alert("ToDo added successfully!");
-      onClose();
+        console.log("Sending Data:", toDoName, toDoDescription); // Debugging
+
+        await tripServices.addToDos(tripId, toDoName, toDoDescription);
+        alert("ToDo added successfully!");
+        onClose();
     } catch (error) {
-      console.error("Error adding ToDo:", error.response || error.message);
-      alert("Failed to add ToDo.");
+        console.error("Error adding ToDo:", error.response?.data || error.message);
+        alert("Failed to add ToDo.");
     }
-  };
+};
 
   return (
     <Modal show={true} onHide={onClose}>

@@ -59,7 +59,6 @@ const tripServices = {
     },
 
     deleteAccommodationById: async (accId) => {
-        console.log("Sending delete request for accommodation with ID:", accId);  // Add this line
         return await protectedInstance.delete(`/users/trips/accommodations/booking/${accId}`);
     },
 
@@ -84,7 +83,10 @@ const tripServices = {
     },
 
     addToDos: async (tripId, toDoName, toDoDescription) => {
-        return await protectedInstance.post(`/users/trips/toDos/${tripId}`, { toDoName, toDoDescription });
+        return await protectedInstance.post(`/users/trips/toDos/${tripId}`, { 
+            toDoName, 
+            toDoDescription 
+        });
     },
 
     updateToDoStatus: async (toDoId, payload) => {

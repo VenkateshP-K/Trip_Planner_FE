@@ -43,7 +43,6 @@ const Transportation = ({ trip, setTrip }) => {
       setFlightsState("loading");
       console.log("Calling API with source:", source, "destination:", destination);
       const data = await tripServices.getFlightBtnStations(source.toLowerCase(), destination.toLowerCase());
-      console.log("API Response Data:", data);
       setFlights(data || []);
       setFlightsState("succeeded");
     } catch (error) {
@@ -57,7 +56,6 @@ const Transportation = ({ trip, setTrip }) => {
       setTrainsState("loading");
       console.log("Calling API with source:", source, "destination:", destination);
       const data = await tripServices.getTrainBtnStations(source.toLowerCase(), destination.toLowerCase());
-      console.log("API Response Data:", data);
       setTrains(data || []);
       setTrainsState("succeeded");
     } catch (error) {
@@ -78,9 +76,6 @@ const Transportation = ({ trip, setTrip }) => {
 
   const handleFlightBooking = async (flight) => {
     try {
-      if (!trip.user) {
-        throw new Error("User information is missing in the trip object.");
-      }
 
       setFlightBookingState((prev) => ({ ...prev, [flight._id]: "loading" }));
       const bookingData = {
