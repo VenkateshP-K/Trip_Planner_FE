@@ -9,16 +9,26 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   const fetchTrips = async () => {
-    setStatus("loading");
     try {
       const response = await tripServices.getAllTripsByUserId();
-      setTrips(response.data);
-      setStatus("succeeded");
+  
+      if (response?.data && Array.isArray(response.data)) {
+        setTrips(response.data);
+        setStatus("succeeded");
+      } else {
+        setTrips([]); 
+        setStatus("succeeded");
+      }
     } catch (error) {
-      console.error("Error fetching trips:", error);
-      setStatus("failed");
+      if (error.response && error.response.status === 400) {
+        setTrips([]); 
+        setStatus("succeeded");
+      } else {
+        setStatus("failed");
+      }
     }
   };
+
 
   const handleTripDelete = async (tripId) => {
     try {
