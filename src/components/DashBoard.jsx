@@ -6,6 +6,7 @@ import userServices from "../services/userServices";
 const Dashboard = () => {
   const [trips, setTrips] = useState([]);
   const [status, setStatus] = useState("idle");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const fetchTrips = async () => {
@@ -16,19 +17,20 @@ const Dashboard = () => {
         setTrips(response.data);
         setStatus("succeeded");
       } else {
-        setTrips([]); 
+        setTrips([]);
         setStatus("succeeded");
       }
     } catch (error) {
-      if (error.response && error.response.status === 400) {
-        setTrips([]); 
+      console.error("Fetch Trips Error:", error);
+  
+      if (error.response?.status === 400) {
+        setTrips([]);
         setStatus("succeeded");
       } else {
         setStatus("failed");
       }
     }
   };
-
 
   const handleTripDelete = async (tripId) => {
     try {
@@ -42,13 +44,13 @@ const Dashboard = () => {
 
   const handleLogout = async () => {
     try {
-      await userServices.Logout();
+      await userServices.logout();
       alert("Logged out successfully");
       localStorage.removeItem("token");
       navigate("/login");
     } catch (err) {
       console.error("Logout failed", err);
-      setError("Logout failed. Try again.");
+      alert("Logout failed. Try again.");
     }
   };
 
