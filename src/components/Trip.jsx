@@ -74,7 +74,6 @@ function Trip() {
 
   return (
     <>
-      <NavBar />
       <div className="container">
         <div className="row bg-body-tertiary mt-4 p-2 rounded">
           <div className="col">

@@ -21,7 +21,7 @@ function NavBar() {
             }
         };
     
-        fetchUserData();  // Call the function to fetch user data
+        fetchUserData(); 
     }, [navigate]);
     
     const handleLogout = async () => {
